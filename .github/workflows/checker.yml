@@ -1,0 +1,29 @@
+name: Apple Stock Checker
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'  # Trigger automatically every 15 minutes
+  workflow_dispatch:        # Add a manual "Run workflow" button for testing
+
+jobs:
+  check-stock:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository code
+        uses: actions/checkout@v4
+
+      - name: Set up Python environment
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run Stock Checker Script
+        env:
+          PART_NUMBER: ${{ secrets.PART_NUMBER }}
+          ZIP_CODE: ${{ secrets.ZIP_CODE }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python main.py
