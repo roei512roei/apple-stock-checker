@@ -2,8 +2,8 @@ name: Apple Stock Checker
 
 on:
   schedule:
-    - cron: '*/15 * * * *'  # Trigger automatically every 15 minutes
-  workflow_dispatch:        # Add a manual "Run workflow" button for testing
+    - cron: '*/15 * * * *'  # Runs automatically every 15 minutes
+  workflow_dispatch:        # Enables manual test button
 
 jobs:
   check-stock:
@@ -18,7 +18,7 @@ jobs:
           python-version: '3.x'
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: pip install requests python-telegram-bot
 
       - name: Run Stock Checker Script
         env:
